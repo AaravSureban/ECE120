@@ -1,0 +1,38 @@
+0011 0000 0000 0000 ; x3000 - starting address of the program
+0101 000 000 1 00000 ; x3000 - set R0 (sum) equal to 0
+0101 001 001 1 00000 ; x3001 - set R1 (count) equal to 0
+0101 010 010 1 00000 ; x3002 - set R2 (memory offset) equal to 0
+0001 001 001 1 01010 ; x3003 - set R1 (count) equal to 10
+0101 011 011 1 00000 ; x3004 - set R3 (current value ) equal to 0
+0010 100 000010111   ; x3005 - set R4 (memory address) equal to x3100
+0001 100 100 000 010 ; x3006 -  set R4 (memory address) equal to address of current value
+0110 011 100 000000 ; x3007 - set R3 (current value) equal to value at R4
+0000 100 000000001   ; x3008 - branch, true equals negative number, false equal positive
+0001 000 000 000 011 ; x3009 - R0 = R0 + R3
+0001 010 010 1 00001 ; x300A - offset++
+0001 001 001 1 11111 ; x300B - count--
+0000 001 111110111 ; x300C - branch, true stores the value, false continues with first array
+1011 000 000010000 ; x300D - store R0 in x4000
+
+0101 000 000 1 00000 ; x300E - set R0 equal to 0
+0101 010 010 1 00000 ; x300F - set R2 equal to 0
+0101 011 011 1 00000 ; x3010 - set R3 (current value ) equal to 0
+0010 100 000001101   ; x3011 - set R4 (memory address) equal to x3200
+0001 100 100 000 010 ; x3012 -  set R4 (memory address) equal to address of current value
+0110 011 100 000000 ; x3013 - set R3 (current value) equal to value at R4
+0001 101 011 1 00001 ; x3014 - set R5 equal to R3 (current value) + 1
+0000 010 000000101   ; x3015 - branch, true if number is 0, true goes to x301C
+0001 011 011 1 00000 ; x3016 - reinstate R3
+0000 011 000000001 ; x3017 - branch, true if number is 0 or positive
+0001 000 000 000 011 ; x3018 - R0 = R0 + R3
+0001 010 010 1 00001 ; x3019 - offset++
+0000 001 111110110 ; x301A - branch, loops back to getting the next value in R3
+1011 000 000000100 ; x301B - store R0 in x4001
+
+1111 0000 0010 0101 ; x301C - TRAP
+0011 0001 0000 0000 ; x301D this line sets the memory to x3100
+0100 0000 0000 0000 ; x301E this line sets the memory to x4000
+0011 0010 0000 0000 ; x301F this line sets the memory to x3200
+0100 0000 0000 0001 ; x3020 this line sets the memory to x4001
+
+
